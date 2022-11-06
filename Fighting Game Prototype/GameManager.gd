@@ -18,6 +18,8 @@ func createPlayers():
 		player.name = "Player" + str(player.num)
 		players.append(player)
 		get_node("Player-Loader").add_child(player)
+		if i == 1:
+			player.rotation.y = PI
 		player.global_position = get_node("Arena/Structures/Floor/FighterStartPositions").get_children()[i].global_position
 		#player.transform = get_node("Arena/Floor/FighterStartPositions").get_children()[i].transform
 		print("Hi")

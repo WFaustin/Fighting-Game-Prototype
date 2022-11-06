@@ -88,4 +88,4 @@ transform = Transform3D(1, 0, 0, 0, -0.0610834, 0.998133, 0, -0.998133, -0.06108
 spot_range = 2.37
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.99937, -0.0354925, 0, 0.0354925, 0.99937, 0, 0.519553, 2.37235)
+transform = Transform3D(1, 0, 0, 0, 0.99937, -0.0354925, 0, 0.0354925, 0.99937, 0, 0.519553, 2.55388)

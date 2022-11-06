@@ -24,6 +24,8 @@ func init(_num:int = 0, _mat:Material = null, _deviceNum : int = 0):
 func _ready():
 	if playerMaterial != null:
 		get_node("PlayerModel").set_surface_override_material (0, playerMaterial)
+		get_node("PlayerModel/Arms/Arm1").set_surface_override_material (0, playerMaterial)
+		get_node("PlayerModel/Arms/Arm2").set_surface_override_material (0, playerMaterial)
 	pass # Replace with function body.
 
 
@@ -64,7 +66,7 @@ func _physics_process(delta):
 		position.x += .03
 	if Input.is_action_pressed("crouch" + str(name)):
 		set_collision_mask_value(2, false)
-		rotation.z = 80
+		rotation.z = -(PI/4)
 	if Input.is_action_just_released("crouch" + str(name)):
 		set_collision_mask_value(2, true)
 		rotation.z = 0
