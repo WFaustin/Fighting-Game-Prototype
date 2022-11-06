@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bchlck2canrds"]
+[gd_scene load_steps=8 format=3 uid="uid://bchlck2canrds"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_aq6pm"]
 
@@ -9,47 +9,73 @@ size = Vector3(0.766535, 0.435218, 0.398264)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_eru2n"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n0c28"]
+albedo_color = Color(1, 0.160784, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rlkcs"]
+material = SubResource("StandardMaterial3D_n0c28")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e0hnp"]
+size = Vector3(1, 0.663663, 1)
+
 [node name="Arena" type="Node3D"]
 
-[node name="Floor" type="MeshInstance3D" parent="."]
+[node name="Structures" type="Node3D" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="Structures"]
 transform = Transform3D(4.69422, 0, 0, 0, 1.12253, 0, 0, 0, 3.16153, 0, -0.588692, 0)
 mesh = SubResource("BoxMesh_aq6pm")
+skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Structures/Floor"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Structures/Floor/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, -0.00513983, 0.290564, 0.296593)
 shape = SubResource("BoxShape3D_a6eum")
 
-[node name="FighterStartPositions" type="Node3D" parent="Floor"]
+[node name="FighterStartPositions" type="Node3D" parent="Structures/Floor"]
 
-[node name="P1" type="Node3D" parent="Floor/FighterStartPositions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.305692, 0.52, 0.31993)
+[node name="P1" type="Node3D" parent="Structures/Floor/FighterStartPositions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.305692, 0.979773, 0.31993)
 
-[node name="P2" type="Node3D" parent="Floor/FighterStartPositions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.262104, 0.52, 0.31993)
+[node name="P2" type="Node3D" parent="Structures/Floor/FighterStartPositions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.262104, 0.979773, 0.31993)
 
-[node name="Wall" type="MeshInstance3D" parent="."]
+[node name="Wall" type="MeshInstance3D" parent="Structures"]
 transform = Transform3D(0.462, 0, 0, 0, 3.24, 0, 0, 0, 3, -2.08, 1.6, 0.009)
 mesh = SubResource("BoxMesh_wcb17")
+skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Wall"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Structures/Wall"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Structures/Wall/StaticBody3D"]
 shape = SubResource("BoxShape3D_eru2n")
 
-[node name="Wall2" type="MeshInstance3D" parent="."]
+[node name="Wall2" type="MeshInstance3D" parent="Structures"]
 transform = Transform3D(0.462, 0, 0, 0, 3.24, 0, 0, 0, 3, 2.06272, 1.6, 0.009)
 mesh = SubResource("BoxMesh_wcb17")
+skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Wall2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Structures/Wall2"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Structures/Wall2/StaticBody3D"]
 shape = SubResource("BoxShape3D_eru2n")
 
-[node name="BackWall" type="MeshInstance3D" parent="."]
+[node name="BackWall" type="MeshInstance3D" parent="Structures"]
 transform = Transform3D(-2.01947e-08, 0, 4.09747, 0, 3.24, 0, -0.462, 0, -1.79106e-07, 0.123717, 1.6, -1.28939)
 mesh = SubResource("BoxMesh_wcb17")
+skeleton = NodePath("../..")
+
+[node name="Platform" type="MeshInstance3D" parent="Structures"]
+transform = Transform3D(1.31325, 0, 0, 0, 0.0887866, 0, 0, 0, 0.660492, 0, 0.561579, 1.09618)
+mesh = SubResource("BoxMesh_rlkcs")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Structures/Platform"]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Structures/Platform/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.176181, 0)
+shape = SubResource("BoxShape3D_e0hnp")
 
 [node name="LightHolders" type="Node3D" parent="."]
 

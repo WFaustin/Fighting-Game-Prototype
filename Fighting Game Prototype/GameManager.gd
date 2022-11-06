@@ -1,7 +1,7 @@
 extends Node3D
 
 var players = []
-var playerInstance = load("res://BasePlayer.tscn")
+var playerInstance = load("res://Character.tscn")
 @export var playerNumMax: int = 2
 
 # Called when the node enters the scene tree for the first time.
@@ -18,7 +18,7 @@ func createPlayers():
 		player.name = "Player" + str(player.num)
 		players.append(player)
 		get_node("Player-Loader").add_child(player)
-		player.global_position = get_node("Arena/Floor/FighterStartPositions").get_children()[i].global_position
+		player.global_position = get_node("Arena/Structures/Floor/FighterStartPositions").get_children()[i].global_position
 		#player.transform = get_node("Arena/Floor/FighterStartPositions").get_children()[i].transform
 		print("Hi")
 	pass
