@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bamoajkvqp0ex"]
+[gd_scene load_steps=9 format=3 uid="uid://bamoajkvqp0ex"]
 
 [ext_resource type="Script" path="res://Character.gd" id="1_hi4we"]
 
@@ -9,6 +9,43 @@ height = 2.07484
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_y8kk5"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_v3aid"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_paugj"]
+size = Vector3(0.356061, 0.778877, 1.64861)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8gyam"]
+size = Vector3(0.353521, 0.778274, 1.64607)
+
+[sub_resource type="Animation" id="Animation_45i67"]
+resource_name = "LightAttack"
+length = 0.3
+step = 0.05
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerModel/Arms/Arm1")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.480235, 0.00905252, 0.767082, 0.2, 1, 0.9, 0.009, 0.767, 0.3, 1, 0.48, 0.009, 0.767)
+tracks/1/type = "scale_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerModel/Arms/Arm1")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.8, 0.3, 0.5, 0.1, 1, 0.6, 0.3, 0.5, 0.2, 1, 1, 0.3, 0.5, 0.3, 1, 0.8, 0.3, 0.5)
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PlayerModel")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0.25, 0, 0, 0.3, 1, 0, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p7s5v"]
+_data = {
+"LightAttack": SubResource("Animation_45i67")
+}
 
 [node name="Character" type="CharacterBody3D"]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0.25, 0)
@@ -29,7 +66,20 @@ transform = Transform3D(0.8, 0, 0, 0, 0.3, 0, 0, 0, 0.5, 0.480235, 0.00905252, 0
 mesh = SubResource("BoxMesh_v3aid")
 skeleton = NodePath("../..")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerModel/Arms/Arm1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.411841, 0, 0)
+shape = SubResource("BoxShape3D_paugj")
+
 [node name="Arm2" type="MeshInstance3D" parent="PlayerModel/Arms"]
 transform = Transform3D(0.8, 0, 0, 0, 0.3, 0, 0, 0, 0.5, 0.480235, 0.00905252, -0.776662)
 mesh = SubResource("BoxMesh_v3aid")
 skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerModel/Arms/Arm2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.411841, 0, 0)
+shape = SubResource("BoxShape3D_8gyam")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_p7s5v")
+}

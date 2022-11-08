@@ -6,7 +6,7 @@ extends CharacterBody3D
 @export var useKeyboard : bool = false
 @export var jumpHeight : float = 4.0
 
-
+var hitboxes = [] 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -19,6 +19,9 @@ func init(_num:int = 0, _mat:Material = null, _deviceNum : int = 0):
 	if deviceNum not in Input.get_connected_joypads():
 		deviceNum = -1
 		useKeyboard = true
+	hitboxes.append(get_node("CollisionShape3D"))
+	hitboxes.append(get_node("PlayerModel/Arms/Arm1/CollisionShape3D"))
+	hitboxes.append(get_node("PlayerModel/Arms/Arm2/CollisionShape3D"))
 		
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,6 +35,14 @@ func _ready():
 func addInputs():
 	#adds the keyboard inputs for players with no controllers
 	pass
+
+func playAttacks(version):
+	match(version):
+		"light":
+			get_node("AnimationPlayer").play("LightAttack")
+			pass
+	pass
+
 	
 #
 func _input(event):
@@ -82,6 +93,9 @@ func _physics_process(delta):
 
 	if velocity.y < -.01 and not Input.is_action_pressed("crouch" + str(name)):
 		set_collision_mask_value(2, true)
+		
+	if Input.is_action_just_pressed("lightAttack" + str(name)):
+		playAttacks("light")
 		
 	move_and_slide()
 
