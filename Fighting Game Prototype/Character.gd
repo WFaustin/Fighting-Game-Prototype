@@ -19,9 +19,9 @@ func init(_num:int = 0, _mat:Material = null, _deviceNum : int = 0):
 	if deviceNum not in Input.get_connected_joypads():
 		deviceNum = -1
 		useKeyboard = true
-	hitboxes.append(get_node("CollisionShape3D"))
-	hitboxes.append(get_node("PlayerModel/Arms/Arm1/CollisionShape3D"))
-	hitboxes.append(get_node("PlayerModel/Arms/Arm2/CollisionShape3D"))
+	hitboxes.append(get_node("."))
+	hitboxes.append(get_node("PlayerModel/Arms/Arm1/StaticBody3D"))
+	hitboxes.append(get_node("PlayerModel/Arms/Arm2/StaticBody3D"))
 		
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -41,9 +41,14 @@ func playAttacks(version):
 		"light":
 			get_node("AnimationPlayer").play("LightAttack")
 			pass
+		"medium":
+			get_node("AnimationPlayer").play("MediumAttack")
+			pass
 	pass
 
-	
+func turnCollisions(isOn):
+	for i in hitboxes:
+		i.set_collision_mask_value(2, isOn)	
 #
 func _input(event):
 #	if event is InputEventKey and deviceNum == -1 and useKeyboard == true:
@@ -76,10 +81,10 @@ func _physics_process(delta):
 	if Input.is_action_pressed("moveRight" + str(name)):
 		position.x += .03
 	if Input.is_action_pressed("crouch" + str(name)):
-		set_collision_mask_value(2, false)
+		turnCollisions(false)
 		rotation.z = -(PI/4)
 	if Input.is_action_just_released("crouch" + str(name)):
-		set_collision_mask_value(2, true)
+		turnCollisions(true)
 		rotation.z = 0
 	# Add the gravity.
 	if not is_on_floor():
@@ -89,13 +94,16 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump" + str(name)) and is_on_floor():
 		print("Jump")
 		velocity.y = jumpHeight
-		set_collision_mask_value(2, false)
+		turnCollisions(false)
 
 	if velocity.y < -.01 and not Input.is_action_pressed("crouch" + str(name)):
-		set_collision_mask_value(2, true)
+		turnCollisions(true)
 		
 	if Input.is_action_just_pressed("lightAttack" + str(name)):
 		playAttacks("light")
+		
+	if Input.is_action_just_pressed("mediumAttack" + str(name)):
+		playAttacks("medium")
 		
 	move_and_slide()
 

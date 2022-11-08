@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bamoajkvqp0ex"]
+[gd_scene load_steps=11 format=3 uid="uid://bamoajkvqp0ex"]
 
 [ext_resource type="Script" path="res://Character.gd" id="1_hi4we"]
 
@@ -11,10 +11,10 @@ height = 2.07484
 [sub_resource type="BoxMesh" id="BoxMesh_v3aid"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_paugj"]
-size = Vector3(0.356061, 0.778877, 1.64861)
+size = Vector3(0.183369, 0.778877, 0.997381)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8gyam"]
-size = Vector3(0.353521, 0.778274, 1.64607)
+size = Vector3(0.187962, 0.761278, 0.945269)
 
 [sub_resource type="Animation" id="Animation_45i67"]
 resource_name = "LightAttack"
@@ -42,9 +42,47 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0.25, 0, 0, 0.3, 1, 0, 0, 0)
 
+[sub_resource type="Animation" id="Animation_po1ux"]
+resource_name = "MediumAttack"
+length = 0.8
+step = 0.05
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerModel")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.4, 1, 0.5, 0, 0, 0.5, 1, 0.5, 0.4, 0, 0.65, 1, 0.5, 0, 0, 0.8, 1, 0, 0, 0)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerModel/Arms/Arm2")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.480235, 0.00905252, -0.776662, 0.4, 1, 0.2, 0.009, -0.777, 0.5, 1, 0.9, 0.009, -0.777, 0.65, 1, 0.690117, 0.00902626, -0.776831, 0.8, 1, 0.480235, 0.00905252, -0.776662)
+tracks/2/type = "rotation_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PlayerModel")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.4, 1, 0, 0, 0, 1, 0.5, 1, 0, 0, -0.174, 0.985, 0.65, 1, 0, 0, 0, 1)
+tracks/3/type = "rotation_3d"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PlayerModel/Arms/Arm2")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.4, 1, 0, 0, 0.216, 0.976, 0.5, 1, 0, 0, -0.643, 0.766, 0.65, 1, 0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_3w7pv"]
+length = 0.001
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p7s5v"]
 _data = {
-"LightAttack": SubResource("Animation_45i67")
+"LightAttack": SubResource("Animation_45i67"),
+"MediumAttack": SubResource("Animation_po1ux"),
+"RESET": SubResource("Animation_3w7pv")
 }
 
 [node name="Character" type="CharacterBody3D"]
@@ -56,6 +94,7 @@ script = ExtResource("1_hi4we")
 shape = SubResource("CapsuleShape3D_51olq")
 
 [node name="PlayerModel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.324483, 0, 0)
 mesh = SubResource("CapsuleMesh_y8kk5")
 skeleton = NodePath("../..")
 
@@ -66,16 +105,23 @@ transform = Transform3D(0.8, 0, 0, 0, 0.3, 0, 0, 0, 0.5, 0.480235, 0.00905252, 0
 mesh = SubResource("BoxMesh_v3aid")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerModel/Arms/Arm1"]
+[node name="StaticBody3D" type="StaticBody3D" parent="PlayerModel/Arms/Arm1"]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerModel/Arms/Arm1/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.411841, 0, 0)
 shape = SubResource("BoxShape3D_paugj")
 
 [node name="Arm2" type="MeshInstance3D" parent="PlayerModel/Arms"]
-transform = Transform3D(0.8, 0, 0, 0, 0.3, 0, 0, 0, 0.5, 0.480235, 0.00905252, -0.776662)
+transform = Transform3D(0.8, 0, 0, 0, 0.3, 0, 0, 0, 0.5, 0.616442, 0.00903548, -0.776772)
+rotation_edit_mode = 1
 mesh = SubResource("BoxMesh_v3aid")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerModel/Arms/Arm2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="PlayerModel/Arms/Arm2"]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerModel/Arms/Arm2/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.411841, 0, 0)
 shape = SubResource("BoxShape3D_8gyam")
 
